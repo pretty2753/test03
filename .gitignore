@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.python-version
+
+# 가상환경 (Virtual Environment)
+venv/
+.venv/
+env/
+ENV/
+
+# 환경 변수 및 비밀 정보 (Environment Variables)
+.env
+.env.test
+
+# IDE 설정 (Editor/IDE)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS 관련 (Operating System)
+.DS_Store
+Thumbs.db
