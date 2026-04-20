@@ -1,27 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>templates/post/list.html</title>
+    <title>글 목록</title>
     <style>
         table {
             width: 100%;
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #dde;
             padding: 8px;
             text-align: left;
         }
         th {
             background-color: #f2f2f2;
         }
+        .btn-delete {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .btn-delete:hover {
+            background-color: #cc0000;
+        }
+        .btn-new {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h3>글 목록입니다</h3>
+        
+        <a href="/post/new" class="btn-new">새 글 작성</a>
+        
         <table>
             <thead>
                 <tr>
@@ -30,6 +53,7 @@
                     <th>제목</th>
                     <th>내용</th>
                     <th>작성일</th>
+                    <th>관리</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +64,12 @@
                     <td>{{ post.title }}</td>
                     <td>{{ post.content }}</td>
                     <td>{{ post.created_at }}</td>
+                    <td>
+                        <form action="/post/delete/{{ post.num }}" method="post"
+                              onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                            <button type="submit" class="btn-delete">삭제</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
