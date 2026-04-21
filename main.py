@@ -94,7 +94,7 @@ def delete(num: int, db: Session = Depends(get_db)): # 경로 변수의 이름�
 
 
 @app.get("/post/edit/{num}")
-def edit(num: int, request: Request, db: Session = Depends(get_db)):
+def editForm(num: int, request: Request, db: Session = Depends(get_db)):
     # 수정할 글정보를 읽어오기 위한 query 작성
     query = text("""
         SELECT num, writer, title, content, created_at
@@ -110,3 +110,23 @@ def edit(num: int, request: Request, db: Session = Depends(get_db)):
             "post":row
         }
     )
+
+# 글 수정 반영 
+@app.post("/post/edit/{num}")
+def edit(request: Request, num: int, title: str = Form(...), content: str = Form(...), db: Session = Depends(get_db)):
+    query = text("""
+        UPDATE post
+        SET title=:title, content=:content
+        WHERE num=:num
+    """)
+    db.execute(query, {"num":num, "title":title, "content":content})
+    db.commit()
+    return templates.TemplateResponse(
+        request=request, 
+        name="post/alert.html",
+        context={
+            "msg":"글 정보를 수정 했습니다!",
+            "url":"/post"
+        }
+    )           
+#get방식은 헤더에 정보가 있고 post방식은 바디에 정보가 있음
